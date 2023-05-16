@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTP-8" />
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0" />
+    <title>Jobsulting</title>
+  </head>
+  <body>
+    <h1>Jobsulting</h1>
+    <a href="/"><button>홈으로</button></a>
+    <a href="{% url 'user:login' %}"><button>로그인</button></a>
+    <a href="{% url 'user:register' %}"><button>회원가입</button></a>
+    <div style="border: 1px black solid; margin: 20px 0px"></div>
+    {% block contents %} {% endblock contents %}
+  </body>
+</html>
