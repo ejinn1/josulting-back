@@ -3,9 +3,12 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from .forms import RegisterForm , LoginForm
 from argon2.exceptions import InvalidHash
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from argon2.exceptions import VerifyMismatchError
 
 # {
 #     "user_id": "aaaa",
@@ -40,36 +43,14 @@ def user_login(request):
     form = LoginForm(data=request.data)
     if form.is_valid():
         try:
-            # login(request, user)
             return Response({'message': '로그인 되었습니다.'}, status=status.HTTP_200_OK)
         except InvalidHash:
             return Response({'message': '잘못된 비밀번호 형식입니다.'}, status=status.HTTP_400_BAD_REQUEST)
     return Response({'message': '아이디 또는 비밀번호가 올바르지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @api_view(['POST'])
-# def user_login(request):
-#     form = LoginForm(data=request.data)
-#     if form.is_valid():
-#         user = authenticate(request, username=form.cleaned_data['user_id'], password=form.cleaned_data['user_pw'])
-#         if user is not None:
-#             try:
-#                 login(request, user)
-#                 return Response({'message': '로그인 되었습니다.'}, status=status.HTTP_200_OK)
-#             except InvalidHash:
-#                 return Response({'message': '잘못된 비밀번호 형식입니다.'}, status=status.HTTP_400_BAD_REQUEST)
-#     return Response({'message': '아이디 또는 비밀번호가 올바르지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['POST'])
-# def user_login(request):
-#     form = LoginForm(data=request.data)
-#     if form.is_valid():
-#         user = authenticate(request, username=form.cleaned_data['user_id'], password=form.cleaned_data['user_pw'])
-#         if user is not None:
-#             login(request, user)
-#             return Response({'message': '로그인 되었습니다.'}, status=status.HTTP_200_OK)
-#     return Response({'message': '아이디 또는 비밀번호가 올바르지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-
+# jwt token
 
 
 
